@@ -9,7 +9,41 @@ A full-stack, AI-powered cryptocurrency dashboard that provides real-time prices
 ## 🛠️ Technology Stack
 - **Frontend:** React 19, Vite, TypeScript, React Router, Lucide Icons
 - **Backend:** Node.js, Express, TypeScript, Prisma (SQLite)
-- **External APIs:** CoinGecko (Live Prices), CryptoPanic (News), OpenRouter/Mistral (AI Insights)
+- **External APIs:** CoinGecko (Live Prices), CryptoPanic (News), OpenRouter/Mistral (AI Insights), Reddit (Memes)
+
+## ✨ Key Features
+- **Secure Authentication:** JWT-based user login and registration.
+- **Personalized Onboarding:** Users select their favorite assets and investor persona (e.g., HODLer, Day Trader).
+- **Dynamic Dashboard:** Live crypto prices, randomized market news, and daily crypto memes fetched from Reddit.
+- **AI-Powered Insights:** Daily investing insights generated via LLM based on the user's specific persona and selected assets.
+- **Feedback Loop:** Users can thumbs up/down AI insights and news, providing data for future ML training.
+
+## 💻 Running Locally
+To run this project on your local machine:
+
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/Dangutman98/AI-Crypto-Advisor.git
+   cd AI-Crypto-Advisor
+   ```
+
+2. **Setup the Backend:**
+   ```bash
+   cd backend
+   npm install
+   # Create a .env file with PORT=5000 and JWT_SECRET="your-secret"
+   # Optionally add CRYPTOPANIC_API_KEY and OPENROUTER_API_KEY for real data
+   npm run build
+   npm start
+   ```
+
+3. **Setup the Frontend:**
+   ```bash
+   # In a new terminal
+   cd frontend
+   npm install
+   npm run dev
+   ```
 
 ## 🤖 AI Tools Interaction Summary
 This project was built collaboratively with an AI Coding Assistant. The development workflow was split into 4 iterative steps:
