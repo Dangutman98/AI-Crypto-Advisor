@@ -13,10 +13,18 @@ const POPULAR_COINS = [
   { id: 'chainlink', label: 'Chainlink (LINK)' }
 ];
 
+const CONTENT_PREFERENCES = [
+  { id: 'hot', label: 'Hot Trends' },
+  { id: 'bullish', label: 'Bullish Signals' },
+  { id: 'bearish', label: 'Bearish Alerts' },
+  { id: 'important', label: 'Important News' },
+  { id: 'memes', label: 'Memes & Fun' }
+];
+
 const Onboarding = () => {
   const [selectedCoins, setSelectedCoins] = useState<string[]>(['bitcoin']);
   const [investorType, setInvestorType] = useState('HODLer');
-  const [contentPrefs, setContentPrefs] = useState('');
+  const [selectedContent, setSelectedContent] = useState<string[]>(['hot', 'important']);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -34,7 +42,7 @@ const Onboarding = () => {
       await api.put('/user/preferences', {
         assets: selectedCoins.join(','),
         investorType,
-        contentPrefs,
+        contentPrefs: selectedContent.join(','),
       });
       navigate('/dashboard');
     } catch (err) {
@@ -106,14 +114,39 @@ const Onboarding = () => {
 
           <div className="input-group" style={{ marginBottom: '32px' }}>
             <label>3. What kind of content do you want to see?</label>
-            <input 
-              type="text" 
-              className="input-field" 
-              placeholder="e.g., Market News, Charts, Social, Memes"
-              value={contentPrefs}
-              onChange={(e) => setContentPrefs(e.target.value)}
-              required 
-            />
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginTop: '8px' }}>
+              {CONTENT_PREFERENCES.map(pref => {
+                const isSelected = selectedContent.includes(pref.id);
+                return (
+                  <button
+                    key={pref.id}
+                    type="button"
+                    onClick={() => {
+                      if (isSelected) {
+                        if (selectedContent.length > 1) {
+                          setSelectedContent(selectedContent.filter(c => c !== pref.id));
+                        }
+                      } else {
+                        setSelectedContent([...selectedContent, pref.id]);
+                      }
+                    }}
+                    style={{
+                      padding: '8px 16px',
+                      borderRadius: '20px',
+                      border: `1px solid ${isSelected ? 'var(--accent)' : 'rgba(255,255,255,0.2)'}`,
+                      background: isSelected ? 'rgba(16, 185, 129, 0.2)' : 'rgba(0,0,0,0.3)',
+                      color: isSelected ? 'var(--accent)' : '#d1d5db',
+                      cursor: 'pointer',
+                      transition: 'all 0.2s',
+                      fontWeight: isSelected ? 600 : 400
+                    }}
+                  >
+                    {pref.label}
+                  </button>
+                );
+              })}
+            </div>
+            {selectedContent.length === 0 && <p style={{ color: 'var(--danger)', fontSize: '0.8rem', marginTop: '8px' }}>Please select at least one content preference.</p>}
           </div>
 
           <button type="submit" className="btn-primary" style={{ width: '100%' }} disabled={loading}>

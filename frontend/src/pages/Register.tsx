@@ -60,6 +60,8 @@ const Register = () => {
               placeholder="you@example.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              pattern="[^\s@]+@[^\s@]+\.[^\s@]+"
+              title="Please enter a valid email address (e.g., you@example.com)"
               required 
             />
           </div>
