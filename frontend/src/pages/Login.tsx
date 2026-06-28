@@ -7,11 +7,13 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
+    setLoading(true);
     
     try {
       const response = await api.post('/auth/login', { email, password });
@@ -21,6 +23,7 @@ const Login = () => {
       navigate('/dashboard');
     } catch (err: any) {
       setError(err.response?.data?.error || 'Failed to login');
+      setLoading(false);
     }
   };
 
@@ -65,9 +68,9 @@ const Login = () => {
             />
           </div>
 
-          <button type="submit" className="btn-primary" style={{ width: '100%', marginBottom: '24px' }}>
+          <button type="submit" className="btn-primary" style={{ width: '100%', marginBottom: '24px' }} disabled={loading}>
             <LogIn size={20} />
-            Sign In
+            {loading ? 'Signing In...' : 'Sign In'}
           </button>
         </form>
 

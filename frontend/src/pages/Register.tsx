@@ -8,11 +8,13 @@ const Register = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
+    setLoading(true);
     
     try {
       const response = await api.post('/auth/register', { name, email, password });
@@ -22,6 +24,7 @@ const Register = () => {
       navigate('/onboarding');
     } catch (err: any) {
       setError(err.response?.data?.error || 'Failed to register');
+      setLoading(false);
     }
   };
 
@@ -79,9 +82,9 @@ const Register = () => {
             />
           </div>
 
-          <button type="submit" className="btn-primary" style={{ width: '100%', marginBottom: '24px' }}>
+          <button type="submit" className="btn-primary" style={{ width: '100%', marginBottom: '24px' }} disabled={loading}>
             <UserPlus size={20} />
-            Create Account
+            {loading ? 'Creating Account...' : 'Create Account'}
           </button>
         </form>
 
