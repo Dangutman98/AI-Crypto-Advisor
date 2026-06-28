@@ -2,8 +2,19 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { api } from '../services/api';
 
-const Onboarding = () => {
-  const [assets, setAssets] = useState('');
+const POPULAR_COINS = [
+  { id: 'bitcoin', label: 'Bitcoin (BTC)' },
+  { id: 'ethereum', label: 'Ethereum (ETH)' },
+  { id: 'solana', label: 'Solana (SOL)' },
+  { id: 'ripple', label: 'Ripple (XRP)' },
+  { id: 'cardano', label: 'Cardano (ADA)' },
+  { id: 'dogecoin', label: 'Dogecoin (DOGE)' },
+  { id: 'polkadot', label: 'Polkadot (DOT)' },
+  { id: 'chainlink', label: 'Chainlink (LINK)' }
+];
+
+const Onboarding = () => कराते
+  const [selectedCoins, setSelectedCoins] = useState<string[]>(['bitcoin']);
   const [investorType, setInvestorType] = useState('HODLer');
   const [contentPrefs, setContentPrefs] = useState('');
   const [loading, setLoading] = useState(false);
@@ -21,7 +32,7 @@ const Onboarding = () => {
     setLoading(true);
     try {
       await api.put('/user/preferences', {
-        assets,
+        assets: selectedCoins.join(','),
         investorType,
         contentPrefs,
       });
@@ -43,14 +54,39 @@ const Onboarding = () => {
         <form onSubmit={handleSubmit}>
           <div className="input-group">
             <label>1. What crypto assets are you interested in?</label>
-            <input 
-              type="text" 
-              className="input-field" 
-              placeholder="e.g., BTC, ETH, SOL"
-              value={assets}
-              onChange={(e) => setAssets(e.target.value)}
-              required 
-            />
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginTop: '8px' }}>
+              {POPULAR_COINS.map(coin => {
+                const isSelected = selectedCoins.includes(coin.id);
+                return (
+                  <button
+                    key={coin.id}
+                    type="button"
+                    onClick={() => {
+                      if (isSelected) {
+                        if (selectedCoins.length > 1) {
+                          setSelectedCoins(selectedCoins.filter(c => c !== coin.id));
+                        }
+                      } else {
+                        setSelectedCoins([...selectedCoins, coin.id]);
+                      }
+                    }}
+                    style={{
+                      padding: '8px 16px',
+                      borderRadius: '20px',
+                      border: `1px solid ${isSelected ? 'var(--accent)' : 'rgba(255,255,255,0.2)'}`,
+                      background: isSelected ? 'rgba(16, 185, 129, 0.2)' : 'rgba(0,0,0,0.3)',
+                      color: isSelected ? 'var(--accent)' : '#d1d5db',
+                      cursor: 'pointer',
+                      transition: 'all 0.2s',
+                      fontWeight: isSelected ? 600 : 400
+                    }}
+                  >
+                    {coin.label}
+                  </button>
+                );
+              })}
+            </div>
+            {selectedCoins.length === 0 && <p style={{ color: 'var(--danger)', fontSize: '0.8rem', marginTop: '8px' }}>Please select at least one asset.</p>}
           </div>
 
           <div className="input-group">
