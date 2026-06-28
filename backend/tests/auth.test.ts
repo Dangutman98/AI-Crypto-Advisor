@@ -9,6 +9,7 @@ app.use('/api/auth', authRoutes);
 
 beforeAll(async () => {
   // Clear the user table before tests to ensure a clean slate
+  await prisma.feedback.deleteMany();
   await prisma.user.deleteMany();
 });
 
