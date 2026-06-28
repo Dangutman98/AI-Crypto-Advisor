@@ -23,8 +23,8 @@ To run this project on your local machine:
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/Dangutman98/AI-Crypto-Advisor.git
-   cd AI-Crypto-Advisor
+   git clone https://github.com/Dangutman98/ai-crypto-advisor.git
+   cd ai-crypto-advisor
    ```
 
 2. **Setup the Backend:**
