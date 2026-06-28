@@ -108,6 +108,10 @@ const Dashboard = () => {
               </div>
             ))}
           </div>
+          <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '12px', marginTop: '16px' }}>
+            <button onClick={() => handleFeedback('prices_daily', 'prices', 'UP')} style={{ background: 'none', border: 'none', color: votes['prices_daily'] === 'UP' ? 'var(--accent)' : '#9ca3af', cursor: 'pointer', transition: 'color 0.2s' }}><ThumbsUp size={20} fill={votes['prices_daily'] === 'UP' ? 'currentColor' : 'none'} /></button>
+            <button onClick={() => handleFeedback('prices_daily', 'prices', 'DOWN')} style={{ background: 'none', border: 'none', color: votes['prices_daily'] === 'DOWN' ? 'var(--danger)' : '#9ca3af', cursor: 'pointer', transition: 'color 0.2s' }}><ThumbsDown size={20} fill={votes['prices_daily'] === 'DOWN' ? 'currentColor' : 'none'} /></button>
+          </div>
         </div>
 
         {/* AI Insight Widget */}

@@ -45,6 +45,13 @@ To run this project on your local machine:
    npm run dev
    ```
 
+4. **Access the Database (Feedback & Users):**
+   ```bash
+   # In the backend directory
+   npx prisma studio
+   # This will open a local web interface at http://localhost:5555
+   ```
+
 ## 🤖 AI Tools Interaction Summary
 This project was built collaboratively with an AI Coding Assistant. The development workflow was split into 4 iterative steps:
 1. **Database & Architecture Setup:** Bootstrapping the monorepo, designing the Prisma schema (Users, DashboardData, Feedback), and setting up Express.
