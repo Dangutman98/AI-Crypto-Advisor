@@ -13,7 +13,7 @@ const POPULAR_COINS = [
   { id: 'chainlink', label: 'Chainlink (LINK)' }
 ];
 
-const Onboarding = () => कराते
+const Onboarding = () => {
   const [selectedCoins, setSelectedCoins] = useState<string[]>(['bitcoin']);
   const [investorType, setInvestorType] = useState('HODLer');
   const [contentPrefs, setContentPrefs] = useState('');
