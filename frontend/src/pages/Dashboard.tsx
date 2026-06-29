@@ -195,7 +195,7 @@ const Dashboard = () => {
             <Newspaper size={24} color="var(--text-main)" /> Market News
           </h2>
           <div style={{ overflowY: 'auto', paddingRight: '8px', flex: 1, display: 'flex', flexDirection: 'column', gap: '12px' }}>
-            {data.news?.map((item: any, i: number) => (
+            {Array.isArray(data.news) ? data.news.map((item: any, i: number) => (
               <div key={i} style={{ padding: '16px', background: 'var(--bg-color)', borderRadius: '8px', border: '1px solid var(--panel-border)' }}>
                 <a href={item.url} target="_blank" rel="noreferrer" style={{ fontSize: '1.05rem', fontWeight: 500, display: 'block', marginBottom: '8px', lineHeight: 1.4 }}>{item.title}</a>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -206,7 +206,9 @@ const Dashboard = () => {
                   </div>
                 </div>
               </div>
-            ))}
+            )) : (
+              <div style={{ textAlign: 'center', color: 'var(--text-muted)', padding: '20px' }}>No news available</div>
+            )}
           </div>
         </div>
 
