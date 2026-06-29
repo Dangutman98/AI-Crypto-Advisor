@@ -5,9 +5,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getDailyInsight = void 0;
 const axios_1 = __importDefault(require("axios"));
+// In-memory cache to ensure the insight stays the same for 24 hours per investor type
+const insightsCache = {};
 const getDailyInsight = async (investorType) => {
+    const today = new Date().toDateString(); // e.g., "Mon Jun 29 2026"
+    // Check if we already have an insight generated for this investor type today
+    if (insightsCache[investorType] && insightsCache[investorType].date === today) {
+        return insightsCache[investorType].insight;
+    }
     try {
         const apiKey = process.env.OPENROUTER_API_KEY;
+        let generatedInsight = '';
         if (!apiKey) {
             // Fallback if no LLM key
             const fallbacks = [
@@ -21,18 +29,24 @@ const getDailyInsight = async (investorType) => {
             ];
             // Pick a different insight each day of the month
             const dayOfMonth = new Date().getDate();
-            return fallbacks[dayOfMonth % fallbacks.length];
+            generatedInsight = fallbacks[dayOfMonth % fallbacks.length];
         }
-        const response = await axios_1.default.post('https://openrouter.ai/api/v1/chat/completions', {
-            model: 'mistralai/mistral-7b-instruct:free',
-            messages: [{ role: 'user', content: `Give me a 2-sentence crypto investing insight for a ${investorType}.` }],
-        }, {
-            headers: {
-                Authorization: `Bearer ${apiKey}`,
-                'Content-Type': 'application/json',
-            },
-        });
-        return response.data.choices[0].message.content;
+        else {
+            // Use OpenRouter FREE model as requested!
+            const response = await axios_1.default.post('https://openrouter.ai/api/v1/chat/completions', {
+                model: 'mistralai/mistral-7b-instruct:free',
+                messages: [{ role: 'user', content: `Give me a 2-sentence crypto investing insight for a ${investorType}. Make it sound professional.` }],
+            }, {
+                headers: {
+                    Authorization: `Bearer ${apiKey}`,
+                    'Content-Type': 'application/json',
+                },
+            });
+            generatedInsight = response.data.choices[0].message.content;
+        }
+        // Save to cache
+        insightsCache[investorType] = { date: today, insight: generatedInsight };
+        return generatedInsight;
     }
     catch (error) {
         console.error('LLM error:', error);
