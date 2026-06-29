@@ -7,7 +7,16 @@ const Dashboard = () => {
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [votes, setVotes] = useState<Record<string, 'UP' | 'DOWN'>>({});
+  const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
+
+  // Filter prices based on search query
+  const filteredPrices = Array.isArray(data?.prices) 
+    ? data.prices.filter((coin: any) => 
+        coin.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+        coin.symbol.toLowerCase().includes(searchQuery.toLowerCase())
+      ) 
+    : [];
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -124,11 +133,30 @@ const Dashboard = () => {
         
         {/* Prices Widget */}
         <div className="glass-panel" style={{ padding: '24px', display: 'flex', flexDirection: 'column', height: '500px' }}>
-          <h2 style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '20px' }}>
-            <TrendingUp size={24} color="var(--text-main)" /> Live Prices
-          </h2>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', gap: '16px' }}>
+            <h2 style={{ display: 'flex', alignItems: 'center', gap: '8px', whiteSpace: 'nowrap' }}>
+              <TrendingUp size={24} color="var(--text-main)" /> Live Prices
+            </h2>
+            <input 
+              type="text" 
+              placeholder="Search coin..." 
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              style={{
+                padding: '8px 12px',
+                background: 'rgba(0,0,0,0.3)',
+                border: '1px solid var(--panel-border)',
+                borderRadius: '6px',
+                color: 'white',
+                fontSize: '0.9rem',
+                fontFamily: 'Outfit, sans-serif',
+                width: '100%',
+                maxWidth: '200px'
+              }}
+            />
+          </div>
           <div style={{ overflowY: 'auto', paddingRight: '8px', flex: 1, display: 'flex', flexDirection: 'column', gap: '12px' }}>
-            {Array.isArray(data.prices) && data.prices.map((coin: any) => (
+            {filteredPrices.map((coin: any) => (
               <div key={coin.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '16px', background: '#000000', borderRadius: '8px', border: '1px solid var(--panel-border)' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                   {coin.image && <img src={coin.image} alt={coin.name} style={{ width: '28px', height: '28px', borderRadius: '50%' }} />}
@@ -146,6 +174,11 @@ const Dashboard = () => {
                 </div>
               </div>
             ))}
+            {filteredPrices.length === 0 && (
+              <div style={{ textAlign: 'center', color: 'var(--text-muted)', marginTop: '20px' }}>
+                No coins found matching "{searchQuery}"
+              </div>
+            )}
           </div>
         </div>
 
