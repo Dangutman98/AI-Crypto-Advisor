@@ -3,12 +3,13 @@ import axios from 'axios';
 // In-memory cache to ensure the insight stays the same for 24 hours per investor type
 const insightsCache: Record<string, { date: string, insight: string }> = {};
 
-export const getDailyInsight = async (investorType: string) => {
+export const getDailyInsight = async (investorType: string, contentPrefs: string = 'general') => {
   const today = new Date().toDateString(); // e.g., "Mon Jun 29 2026"
+  const cacheKey = `${investorType}-${contentPrefs}`;
 
-  // Check if we already have an insight generated for this investor type today
-  if (insightsCache[investorType] && insightsCache[investorType].date === today) {
-    return insightsCache[investorType].insight;
+  // Check if we already have an insight generated for this combination today
+  if (insightsCache[cacheKey] && insightsCache[cacheKey].date === today) {
+    return insightsCache[cacheKey].insight;
   }
 
   try {
@@ -19,7 +20,7 @@ export const getDailyInsight = async (investorType: string) => {
     if (!apiKey) {
       // Fallback if no LLM key
       const fallbacks = [
-        `As a ${investorType}, remember that market volatility is a feature, not a bug. Stay focused on your long-term strategy.`,
+        `As a ${investorType} looking for ${contentPrefs}, remember that market volatility is a feature, not a bug. Stay focused on your long-term strategy.`,
         `Patience is key for a ${investorType}. Look at the macro trends instead of getting caught up in the daily noise.`,
         `A smart ${investorType} knows when to zoom out. Historical cycles suggest we are exactly where we need to be.`,
         `Don't let emotions drive your decisions. As a ${investorType}, sticking to your original thesis is crucial right now.`,
@@ -36,7 +37,7 @@ export const getDailyInsight = async (investorType: string) => {
         'https://openrouter.ai/api/v1/chat/completions',
         {
           model: 'mistralai/mistral-7b-instruct:free',
-          messages: [{ role: 'user', content: `Give me a 2-sentence crypto investing insight for a ${investorType}. Make it sound professional.` }],
+          messages: [{ role: 'user', content: `Give me a 2-sentence crypto investing insight for a ${investorType} who prefers content about ${contentPrefs}. Make it sound professional.` }],
         },
         {
           headers: {
@@ -49,7 +50,7 @@ export const getDailyInsight = async (investorType: string) => {
     }
 
     // Save to cache
-    insightsCache[investorType] = { date: today, insight: generatedInsight };
+    insightsCache[cacheKey] = { date: today, insight: generatedInsight };
     return generatedInsight;
 
   } catch (error) {

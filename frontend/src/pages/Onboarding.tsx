@@ -10,7 +10,8 @@ const POPULAR_COINS = [
   { id: 'cardano', label: 'Cardano (ADA)' },
   { id: 'dogecoin', label: 'Dogecoin (DOGE)' },
   { id: 'polkadot', label: 'Polkadot (DOT)' },
-  { id: 'chainlink', label: 'Chainlink (LINK)' }
+  { id: 'chainlink', label: 'Chainlink (LINK)' },
+  { id: 'all', label: 'All Of Them!' }
 ];
 
 const CONTENT_PREFERENCES = [
