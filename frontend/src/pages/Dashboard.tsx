@@ -103,7 +103,7 @@ const Dashboard = () => {
           <h2 style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '20px' }}>
             <ImageIcon size={24} color="var(--text-main)" /> Daily Crypto Meme
           </h2>
-          <div style={{ flex: 1, background: '#000000', borderRadius: '8px', padding: '16px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+          <div style={{ flex: 1, background: 'var(--bg-color)', borderRadius: '8px', padding: '16px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
             <p style={{ fontWeight: 500, marginBottom: '16px', textAlign: 'center' }}>{data.meme?.title}</p>
             <img src={data.meme?.url} alt="Meme" style={{ maxWidth: '100%', maxHeight: '300px', borderRadius: '4px', objectFit: 'contain' }} />
           </div>
@@ -118,7 +118,7 @@ const Dashboard = () => {
           <h2 style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '20px' }}>
             <Lightbulb size={24} color="var(--text-main)" /> AI Insight of the Day
           </h2>
-          <div style={{ flex: 1, fontSize: '1.2rem', lineHeight: 1.6, color: 'var(--text-main)', fontStyle: 'italic', background: '#000000', padding: '24px', borderRadius: '8px', borderLeft: '4px solid var(--text-main)' }}>
+          <div style={{ flex: 1, fontSize: '1.2rem', lineHeight: 1.6, color: 'var(--text-main)', fontStyle: 'italic', background: 'var(--bg-color)', padding: '24px', borderRadius: '8px', borderLeft: '4px solid var(--text-main)' }}>
             "{data.insight}"
           </div>
           <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '12px', marginTop: '16px' }}>
@@ -157,7 +157,7 @@ const Dashboard = () => {
           </div>
           <div style={{ overflowY: 'auto', paddingRight: '8px', flex: 1, display: 'flex', flexDirection: 'column', gap: '12px' }}>
             {filteredPrices.map((coin: any) => (
-              <div key={coin.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '16px', background: '#000000', borderRadius: '8px', border: '1px solid var(--panel-border)' }}>
+              <div key={coin.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '16px', background: 'var(--bg-color)', borderRadius: '8px', border: '1px solid var(--panel-border)' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                   {coin.image && <img src={coin.image} alt={coin.name} style={{ width: '28px', height: '28px', borderRadius: '50%' }} />}
                   <div>
@@ -189,7 +189,7 @@ const Dashboard = () => {
           </h2>
           <div style={{ overflowY: 'auto', paddingRight: '8px', flex: 1, display: 'flex', flexDirection: 'column', gap: '12px' }}>
             {data.news?.map((item: any, i: number) => (
-              <div key={i} style={{ padding: '16px', background: '#000000', borderRadius: '8px', border: '1px solid var(--panel-border)' }}>
+              <div key={i} style={{ padding: '16px', background: 'var(--bg-color)', borderRadius: '8px', border: '1px solid var(--panel-border)' }}>
                 <a href={item.url} target="_blank" rel="noreferrer" style={{ fontSize: '1.05rem', fontWeight: 500, display: 'block', marginBottom: '8px', lineHeight: 1.4 }}>{item.title}</a>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>{item.domain}</span>
