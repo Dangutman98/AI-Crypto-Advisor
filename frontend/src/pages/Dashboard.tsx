@@ -44,6 +44,13 @@ const Dashboard = () => {
         if (response.data.pinnedCoins) {
           setPinnedCoins(response.data.pinnedCoins.split(',').filter(Boolean));
         }
+        if (response.data.feedbacks && Array.isArray(response.data.feedbacks)) {
+          const initialVotes: Record<string, 'UP' | 'DOWN'> = {};
+          response.data.feedbacks.forEach((fb: any) => {
+            initialVotes[fb.contentId] = fb.voteType;
+          });
+          setVotes(initialVotes);
+        }
       } catch (error) {
         console.error('Failed to fetch dashboard data', error);
       } finally {

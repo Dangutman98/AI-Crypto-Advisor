@@ -15,11 +15,12 @@ export const getDashboardData = async (req: any, res: Response) => {
     }
 
     // Fetch all external APIs concurrently based on user preferences
-    const [prices, news, insight, meme] = await Promise.all([
+    const [prices, news, insight, meme, feedbacks] = await Promise.all([
       getCoinPrices(user.assets || 'bitcoin,ethereum'),
       getMarketNews(),
       getDailyInsight(user.investorType || 'HODLer'),
-      getMeme()
+      getMeme(),
+      prisma.feedback.findMany({ where: { userId } })
     ]);
 
     res.json({
@@ -27,7 +28,8 @@ export const getDashboardData = async (req: any, res: Response) => {
       news,
       insight,
       meme,
-      pinnedCoins: user.pinnedCoins || ''
+      pinnedCoins: user.pinnedCoins || '',
+      feedbacks
     });
   } catch (error) {
     console.error('Dashboard error:', error);
