@@ -8,7 +8,7 @@ A full-stack, AI-powered cryptocurrency dashboard that provides real-time prices
 
 ## 🛠️ Technology Stack
 - **Frontend:** React 19, Vite, TypeScript, React Router, Lucide Icons
-- **Backend:** Node.js, Express, TypeScript, Prisma (SQLite)
+- **Backend:** Node.js, Express, TypeScript, Prisma (PostgreSQL)
 - **External APIs:** CoinGecko (Live Prices), CryptoPanic (News), OpenRouter/Mistral (AI Insights), Reddit (Memes)
 
 ## ✨ Key Features
@@ -32,7 +32,7 @@ To run this project on your local machine:
    cd backend
    npm install
    # Create a .env file with PORT=5000 and JWT_SECRET="your-secret"
-   # Optionally add CRYPTOPANIC_API_KEY and OPENROUTER_API_KEY for real data
+   # Add DATABASE_URL with the PostgreSQL connection string
    npm run build
    npm start
    ```
@@ -45,19 +45,36 @@ To run this project on your local machine:
    npm run dev
    ```
 
-4. **Access the Database (Feedback & Users):**
-   ```bash
-   # In the backend directory
-   npx prisma studio
-   # This will open a local web interface at http://localhost:5555
-   ```
+## 🗄️ Database Access
+The application uses a live, remote **PostgreSQL** database hosted on Render. 
 
-## 🤖 AI Tools Interaction Summary
-This project was built collaboratively with an AI Coding Assistant. The development workflow was split into 4 iterative steps:
-1. **Database & Architecture Setup:** Bootstrapping the monorepo, designing the Prisma schema (Users, DashboardData, Feedback), and setting up Express.
-2. **Backend Services & API:** Building robust controllers with JWT authentication, and integrating external APIs for live crypto data and AI insight generation.
-3. **Frontend UI & State Management:** Developing a highly responsive, premium-styled React dashboard featuring onboarding flows and dynamic widgets.
-4. **Deployment & Polish:** Deploying the backend to Render, the frontend to Vercel, and wiring up the UI to handle live feedback (Thumbs Up/Down).
+You can easily inspect the live database (Users, Preferences, and Feedback tables) using any standard database client (e.g., DBeaver, DataGrip, TablePlus, pgAdmin) with the following connection string:
+
+```text
+postgresql://crypto_db_28gd_user:DdGAKJrhr19iyrRzKGEXmFGQjhZfsjuF@dpg-d91d5d6q1p3s73e4b790-a.virginia-postgres.render.com/crypto_db_28gd
+```
+
+**Alternative (Prisma Studio):**
+If you prefer not to use an external DB client, you can use the built-in Prisma Studio:
+1. Clone the repository and navigate to the `backend` folder.
+2. Run `npm install`.
+3. Create a `.env` file and add the `DATABASE_URL` with the connection string above.
+4. Run `npx prisma studio` to open a visual database editor in your browser.
+
+## 🤖 AI Collaboration Summary
+During this assignment, I used an AI coding assistant to help speed up my work. I treated the AI like a coding partner—I was the one making the decisions about the research, architecture, and product logic, while the AI helped me execute the vision and write the code faster.
+
+Here is a quick breakdown of how we worked together:
+
+*   **Research & Requirements:** Before writing a single line of code or even planning the project, I asked the AI to perform a deep web search on the company's website to understand your product, target audience, and culture. I then instructed the AI to carefully analyze the assignment instructions and highlight the core requirements to ensure we were perfectly aligned with the goals.
+*   **Project Planning & Architecture:** After the research phase, I asked the AI to help me break down the entire assignment into a step-by-step guide. I divided the project into manageable phases (Frontend UI, Backend APIs, Database, and Integrations). I also made sure to guide the AI to separate the backend code neatly into Routes, Controllers, and Services so the project wouldn't become messy.
+*   **Testing & Quality Assurance:** Before jumping into the main codebase, I created a dedicated `tests` folder to plan out tests for both the frontend and backend. I wanted to ensure we had a strategy to evaluate edge cases and verify the code's stability from all angles. Additionally, in the early stages, I manually tested the Database operations and API endpoints using Postman to ensure the foundation was solid before connecting the UI.
+*   **Design & UI:** I wanted a modern "Glassmorphism" look for the app. Instead of using a big CSS framework, I asked the AI to help me write clean, custom CSS. I tweaked its suggestions to make sure the colors, shadows, and overall feel looked premium.
+*   **API & Core Logic:** The AI was great at writing the basic fetch requests to connect to external APIs. However, I designed the actual logic. For example, I noticed the initial AI prompt only used the user's "Investor Type". I actively changed the backend code so it also uses the user's "Content Preferences" to generate much smarter and more personalized daily insights.
+*   **Debugging:** When I ran into bugs, I used the AI to bounce ideas off. For example, when deploying to Vercel, I got a 404 routing error. I figured out it was a React Router SPA issue, and asked the AI to help me generate the correct `vercel.json` configuration file to fix it.
+
+**Conclusion:** 
+Using AI was incredibly helpful for writing repetitive code quickly. This saved me a lot of time and allowed me to really focus on the big picture—researching the company, planning the project phases, setting up a solid testing strategy, designing the architecture, and debugging edge cases. I reviewed and tested everything the AI generated to make sure it met the assignment's exact requirements.
 
 ## 🧠 Bonus: Machine Learning Conceptual Explanation
 As part of the assignment, we built a `Feedback` tracking system where users can click "Thumbs Up" or "Thumbs Down" on the news and AI insights. This data is actively saved to our database. 
