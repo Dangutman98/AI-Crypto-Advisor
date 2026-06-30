@@ -74,7 +74,7 @@ Here is a quick breakdown of how we worked together:
 *   **Debugging:** When I ran into bugs, I used the AI to bounce ideas off. For example, when deploying to Vercel, I got a 404 routing error. I figured out it was a React Router SPA issue and asked the AI to help me generate the correct `vercel.json` configuration file to fix it.
 
 **Conclusion:** 
-Using AI was incredibly helpful for writing repetitive code quickly. This saved me a lot of time and allowed me to really focus on the big picture—researching the company, planning the project phases, setting up a solid testing strategy, designing the architecture, and debugging edge cases. I reviewed and tested everything the AI generated to make sure it met the assignment's exact requirements.
+Using AI was incredibly helpful for writing repetitive code quickly. This saved me a lot of time and allowed me to really focus on the big picture, researching the company, planning the project phases, setting up a solid testing strategy, designing the architecture, and debugging edge cases. I reviewed and tested everything the AI generated to make sure it met the assignment's exact requirements.
 
 ## 🧠 Bonus: Machine Learning Conceptual Explanation
 As part of the assignment, we built a `Feedback` tracking system where users can click "Thumbs Up" or "Thumbs Down" on the news and AI insights. This data is actively saved to our database. 
