@@ -114,6 +114,9 @@ const Dashboard = () => {
     );
   }
 
+  const memeId = data.meme?.url ? btoa(encodeURIComponent(data.meme.url)) : 'meme_daily';
+  const insightId = data.insight ? btoa(encodeURIComponent(data.insight.substring(0, 40))) : 'insight_daily';
+
   return (
     <div className="animate-fade-in" style={{ padding: '40px', maxWidth: '1200px', margin: '0 auto', width: '100%' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '32px' }}>
@@ -139,8 +142,8 @@ const Dashboard = () => {
             <img src={data.meme?.url} alt="Meme" style={{ maxWidth: '100%', maxHeight: '300px', borderRadius: '4px', objectFit: 'contain' }} />
           </div>
           <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '12px', marginTop: '16px' }}>
-            <button onClick={() => handleFeedback('meme_daily', 'meme', 'UP')} style={{ background: 'none', border: 'none', color: votes['meme_daily'] === 'UP' ? 'var(--text-main)' : 'var(--text-muted)', cursor: 'pointer', transition: 'color 0.2s' }}><ThumbsUp size={20} fill={votes['meme_daily'] === 'UP' ? 'currentColor' : 'none'} /></button>
-            <button onClick={() => handleFeedback('meme_daily', 'meme', 'DOWN')} style={{ background: 'none', border: 'none', color: votes['meme_daily'] === 'DOWN' ? 'var(--danger)' : 'var(--text-muted)', cursor: 'pointer', transition: 'color 0.2s' }}><ThumbsDown size={20} fill={votes['meme_daily'] === 'DOWN' ? 'currentColor' : 'none'} /></button>
+            <button onClick={() => handleFeedback(memeId, 'meme', 'UP')} style={{ background: 'none', border: 'none', color: votes[memeId] === 'UP' ? 'var(--text-main)' : 'var(--text-muted)', cursor: 'pointer', transition: 'color 0.2s' }}><ThumbsUp size={20} fill={votes[memeId] === 'UP' ? 'currentColor' : 'none'} /></button>
+            <button onClick={() => handleFeedback(memeId, 'meme', 'DOWN')} style={{ background: 'none', border: 'none', color: votes[memeId] === 'DOWN' ? 'var(--danger)' : 'var(--text-muted)', cursor: 'pointer', transition: 'color 0.2s' }}><ThumbsDown size={20} fill={votes[memeId] === 'DOWN' ? 'currentColor' : 'none'} /></button>
           </div>
         </div>
 
@@ -153,8 +156,8 @@ const Dashboard = () => {
             "{data.insight}"
           </div>
           <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '12px', marginTop: '16px' }}>
-            <button onClick={() => handleFeedback('insight_daily', 'insight', 'UP')} style={{ background: 'none', border: 'none', color: votes['insight_daily'] === 'UP' ? 'var(--text-main)' : 'var(--text-muted)', cursor: 'pointer', transition: 'color 0.2s' }}><ThumbsUp size={20} fill={votes['insight_daily'] === 'UP' ? 'currentColor' : 'none'} /></button>
-            <button onClick={() => handleFeedback('insight_daily', 'insight', 'DOWN')} style={{ background: 'none', border: 'none', color: votes['insight_daily'] === 'DOWN' ? 'var(--danger)' : 'var(--text-muted)', cursor: 'pointer', transition: 'color 0.2s' }}><ThumbsDown size={20} fill={votes['insight_daily'] === 'DOWN' ? 'currentColor' : 'none'} /></button>
+            <button onClick={() => handleFeedback(insightId, 'insight', 'UP')} style={{ background: 'none', border: 'none', color: votes[insightId] === 'UP' ? 'var(--text-main)' : 'var(--text-muted)', cursor: 'pointer', transition: 'color 0.2s' }}><ThumbsUp size={20} fill={votes[insightId] === 'UP' ? 'currentColor' : 'none'} /></button>
+            <button onClick={() => handleFeedback(insightId, 'insight', 'DOWN')} style={{ background: 'none', border: 'none', color: votes[insightId] === 'DOWN' ? 'var(--danger)' : 'var(--text-muted)', cursor: 'pointer', transition: 'color 0.2s' }}><ThumbsDown size={20} fill={votes[insightId] === 'DOWN' ? 'currentColor' : 'none'} /></button>
           </div>
         </div>
       </div>
@@ -242,18 +245,20 @@ const Dashboard = () => {
             <Newspaper size={24} color="var(--text-main)" /> Market News
           </h2>
           <div style={{ overflowY: 'auto', paddingRight: '8px', flex: 1, display: 'flex', flexDirection: 'column', gap: '12px' }}>
-            {Array.isArray(data.news) ? data.news.map((item: any, i: number) => (
+            {Array.isArray(data.news) ? data.news.map((item: any, i: number) => {
+              const newsId = item.url ? btoa(encodeURIComponent(item.url)) : `news_${i}`;
+              return (
               <div key={i} style={{ padding: '16px', background: 'var(--bg-color)', borderRadius: '8px', border: '1px solid var(--panel-border)' }}>
                 <a href={item.url} target="_blank" rel="noreferrer" style={{ fontSize: '1.05rem', fontWeight: 500, display: 'block', marginBottom: '8px', lineHeight: 1.4 }}>{item.title}</a>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>{item.domain}</span>
                   <div style={{ display: 'flex', gap: '12px' }}>
-                    <button onClick={() => handleFeedback(`news_${i}`, 'news', 'UP')} style={{ background: 'none', border: 'none', color: votes[`news_${i}`] === 'UP' ? 'var(--text-main)' : 'var(--text-muted)', cursor: 'pointer', transition: 'color 0.2s' }}><ThumbsUp size={16} fill={votes[`news_${i}`] === 'UP' ? 'currentColor' : 'none'} /></button>
-                    <button onClick={() => handleFeedback(`news_${i}`, 'news', 'DOWN')} style={{ background: 'none', border: 'none', color: votes[`news_${i}`] === 'DOWN' ? 'var(--danger)' : 'var(--text-muted)', cursor: 'pointer', transition: 'color 0.2s' }}><ThumbsDown size={16} fill={votes[`news_${i}`] === 'DOWN' ? 'currentColor' : 'none'} /></button>
+                    <button onClick={() => handleFeedback(newsId, 'news', 'UP')} style={{ background: 'none', border: 'none', color: votes[newsId] === 'UP' ? 'var(--text-main)' : 'var(--text-muted)', cursor: 'pointer', transition: 'color 0.2s' }}><ThumbsUp size={16} fill={votes[newsId] === 'UP' ? 'currentColor' : 'none'} /></button>
+                    <button onClick={() => handleFeedback(newsId, 'news', 'DOWN')} style={{ background: 'none', border: 'none', color: votes[newsId] === 'DOWN' ? 'var(--danger)' : 'var(--text-muted)', cursor: 'pointer', transition: 'color 0.2s' }}><ThumbsDown size={16} fill={votes[newsId] === 'DOWN' ? 'currentColor' : 'none'} /></button>
                   </div>
                 </div>
               </div>
-            )) : (
+            )}) : (
               <div style={{ textAlign: 'center', color: 'var(--text-muted)', padding: '20px' }}>No news available</div>
             )}
           </div>
