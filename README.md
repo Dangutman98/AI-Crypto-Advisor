@@ -62,7 +62,7 @@ If you prefer not to use an external DB client, you can use the built-in Prisma 
 4. Run `npx prisma studio` to open a visual database editor in your browser.
 
 ## 🤖 AI Collaboration Summary
-During this assignment, I used an AI coding assistant to help speed up my work. I treated the AI like a coding partner-I was the one making the decisions about the research, architecture, and product logic, while the AI helped me execute the vision and write the code faster.
+During this assignment, I used an AI coding assistant to help speed up my work. I treated the AI like a coding partner, I was the one making the decisions about the research, architecture, and product logic, while the AI helped me execute the vision and write the code faster.
 
 Here is a quick breakdown of how we worked together:
 
