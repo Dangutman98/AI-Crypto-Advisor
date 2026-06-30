@@ -79,7 +79,7 @@ Using AI was incredibly helpful for writing repetitive code quickly. This saved 
 ## 🌟 Bonus Features & Architectural Thoughts
 
 ### 1. UX Personalization & Smart Context (Pin to Top)
-During the onboarding flow, users are prompted to select their favorite cryptocurrencies. This isn't just a visual gimmick—these coins are actively saved to their profile in the database and dynamically "pinned to the top" of their dashboard market widget for immediate visibility. More importantly, this selection is injected directly into the LLM context, ensuring the AI insights are hyper-focused on the user's actual portfolio interests rather than generic market data.
+During the onboarding flow, users are prompted to select their favorite cryptocurrencies. These coins are actively saved to their profile in the database and dynamically "pinned to the top" of their dashboard market widget for immediate visibility. More importantly, this selection is injected directly into the LLM context, ensuring the AI insights are focused on the user's actual portfolio interests rather than generic market data.
 
 ### 2. Machine Learning Conceptualization (RLHF)
 As part of the assignment, we built a `Feedback` tracking system where users can click "Thumbs Up" or "Thumbs Down" on the news and AI insights. This data is actively saved to our database and can be used to train a Machine Learning model:
