@@ -76,10 +76,13 @@ Here is a quick breakdown of how we worked together:
 **Conclusion:** 
 Using AI was incredibly helpful for writing repetitive code quickly. This saved me a lot of time and allowed me to really focus on the big picture, researching the company, planning the project phases, setting up a solid testing strategy, designing the architecture, and debugging edge cases. I reviewed and tested everything the AI generated to make sure it met the assignment's exact requirements.
 
-## 🧠 Bonus: Machine Learning Conceptual Explanation
-As part of the assignment, we built a `Feedback` tracking system where users can click "Thumbs Up" or "Thumbs Down" on the news and AI insights. This data is actively saved to our database. 
+## 🌟 Bonus Features & Architectural Thoughts
 
-**How to use this data to train a Machine Learning model:**
+### 1. UX Personalization & Smart Context (Pin to Top)
+During the onboarding flow, users are prompted to select their favorite cryptocurrencies. This isn't just a visual gimmick—these coins are actively saved to their profile in the database and dynamically "pinned to the top" of their dashboard market widget for immediate visibility. More importantly, this selection is injected directly into the LLM context, ensuring the AI insights are hyper-focused on the user's actual portfolio interests rather than generic market data.
+
+### 2. Machine Learning Conceptualization (RLHF)
+As part of the assignment, we built a `Feedback` tracking system where users can click "Thumbs Up" or "Thumbs Down" on the news and AI insights. This data is actively saved to our database and can be used to train a Machine Learning model:
 1. **Data Extraction & Preprocessing:** We can extract the feedback logs from the database, where each row contains the content (e.g., the text of the AI insight) and the label (`UP` = 1, `DOWN` = 0). 
 2. **Feature Engineering:** Convert the text content into numerical embeddings using models like BERT or OpenAI's embedding endpoints. 
 3. **Model Selection:** Train a supervised learning model (such as Logistic Regression or a simple Neural Network classifier) on these embeddings to predict the likelihood of an "UP" vote.
